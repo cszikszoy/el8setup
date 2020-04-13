@@ -445,13 +445,12 @@ fi
 
 
 
-######### FIXME FOR EL8
 ####
 # SSSD / DOMAIN JOIN
 ####
 if confirm "Join domain?"; then
     # install packages and discover domain
-    yum install -y sssd realmd
+    dnf install -y sssd realmd
 
     # prompt for domain
     echo -n -e "${CYAN}Enter domain to join: ${YELLOW}"
@@ -463,7 +462,7 @@ if confirm "Join domain?"; then
     # grab list of required packages
     PACKAGES=$(realm discover $DOMAIN | grep "required-package:" | awk -F ' ' '{print $2}' | tr '\n' ' ')
     # and install them
-    yum -y install $PACKAGES
+    dnf -y install $PACKAGES
 
     # prompt for realm join unsername
     echo -n -e "${CYAN}Enter username to perform domain join: ${YELLOW}"
