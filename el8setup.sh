@@ -147,6 +147,9 @@ if confirm "Configure proxy?"; then
     echo "# export proxy for all users" > ${PROXYSH}
     echo "export http_proxy=http://${PROXY}" >> ${PROXYSH}
     echo "export https_proxy=http://${PROXY}" >> ${PROXYSH}
+
+    # run proxy script to export the variables for the current session too
+    . ${PROXYSH}
 fi
 
 
