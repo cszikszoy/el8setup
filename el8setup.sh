@@ -6,8 +6,8 @@
 PROXY=""
 # format: <server>:<nfs export path>
 NFS_HOME=""
-EPEL_REPO="https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
-ZABBIX_REPO="https://repo.zabbix.com/zabbix/4.5/rhel/8/x86_64/zabbix-release-4.5-2.el8.noarch.rpm"
+EPEL_REPO="http://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
+ZABBIX_REPO="http://repo.zabbix.com/zabbix/4.5/rhel/8/x86_64/zabbix-release-4.5-2.el8.noarch.rpm"
 # $PROGRAM variable sets the name of various configuration files written by this script
 PROGRAM=""
 
