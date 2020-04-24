@@ -259,6 +259,106 @@ fi
 
 
 ####
+# SQUID
+####
+if confirm "Install Squid proxy?"; then
+    # install squid
+    dnf -y install squid
+
+    # squid config file
+    SQUID_CONF_FILE="/etc/squid/squid.conf"
+
+    # backup original squid config file
+    mv ${SQUID_CONF_FILE} ${SQUID_CONF_FILE}.bak
+
+    # start config file by writing ACLs
+    while : ; do
+        # ask for ACL
+        ACL=$(prompt "Enter ACL in CIDR (<IP>/<mask>) form: ")
+
+        # if we didn't get a group, break the loop
+        [[ -z ${ACL:+x} ]] && break
+
+        # add this group to sudoers
+        echo "acl localnet src ${ACL}" > ${SQUID_CONF_FILE}
+    done
+
+    # configure squid
+    read -r -d '' SQUID_CONF <<EOF
+
+# allow only http & https
+acl SSL_ports port 443
+acl Safe_ports port 80      # http
+acl Safe_ports port 443     # https
+acl CONNECT method CONNECT
+
+# Deny requests to certain unsafe ports
+http_access deny !Safe_ports
+
+# Deny CONNECT to other than secure SSL ports
+http_access deny CONNECT !SSL_ports
+
+# Only allow cachemgr access from localhost
+http_access allow localhost manager
+http_access deny manager
+
+# We strongly recommend the following be uncommented to protect innocent
+# web applications running on the proxy server who think the only
+# one who can access services on "localhost" is a local user
+http_access deny to_localhost
+
+# Example rule allowing access from your local networks.
+# Adapt localnet in the ACL section to list your (internal) IP networks
+# from where browsing should be allowed
+http_access allow localnet
+http_access allow localhost
+
+# And finally deny all other access to this proxy
+http_access deny all
+
+# Squid normally listens to port 3128
+http_port 3128
+
+# Uncomment and adjust the following to add a disk cache directory.
+cache_dir ufs /var/spool/squid 100 16 256
+
+# Leave coredumps in the first cache dir
+coredump_dir /var/spool/squid
+
+# refresh patterns
+refresh_pattern -i (/cgi-bin/|\?) 0 0%  0
+refresh_pattern .       0   20% 4320
+
+# hide ip address of requestor
+forwarded_for off
+
+# deny these types of header requests
+request_header_access From deny all
+request_header_access Server deny all
+request_header_access Referer deny all
+request_header_access X-Forwarded-For deny all
+request_header_access Via deny all
+request_header_access Cache-Control deny all
+
+EOF
+
+    # write rest of squid config file
+    echo "${SQUID_CONF}" >> ${SQUID_CONF_FILE}
+
+    # enable & start squid
+    systemd_enable squid
+
+    # is the firewall on?
+    if [[ $(firewall-cmd --state) -eq 0 ]]; then
+        # allow zabbix passive agent port
+        firewall-cmd --permanent --add-service=squid
+        firewall-cmd --reload
+    fi
+fi
+
+
+
+####
 # SUDOERS
 ####
 if confirm "Setup sudoers?"; then
