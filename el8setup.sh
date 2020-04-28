@@ -560,12 +560,28 @@ if confirm "Join domain?"; then
     read DOMAIN
     echo -e "${RESET}"
 
-    # discover domain
-    realm discover $DOMAIN || exit 1
-    # grab list of required packages
-    PACKAGES=$(realm discover $DOMAIN | grep "required-package:" | awk -F ' ' '{print $2}' | tr '\n' ' ')
+    # try to discover domain
+    REALM_DISCOVER=$(realm discover ${DOMAIN})
+
+    # quit if we can't discover it
+    if [ $? -ne 0 ]; then
+        echo "Domain discovery for ${DOMAIN} failed!"
+        exit 1
+    fi
+
+    # get realm type
+    REALM_TYPE=$(echo "${REALM_DISCOVER}" | grep "type:" | awk -F ' ' '{print $2}' | tr -d '\n')
+
+    # only jon kerberos (AD) domains
+    if [[ "${REALM_TYPE}" != "kerberos" ]]; then
+        echo "Can't join non 'kerberos' domains!"
+        exit 1
+    fi
+
+    # get list of packages required for the realm
+    REALM_PACKAGES=$(echo "${REALM_DISCOVER}" | grep "required-package:" | awk -F ' ' '{print $2}' | tr '\n' ' ')
     # and install them
-    dnf -y install $PACKAGES
+    dnf -y install ${REALM_PACKAGES}
 
     # prompt for realm join unsername
     echo -n -e "${CYAN}Enter username to perform domain join: ${YELLOW}"
