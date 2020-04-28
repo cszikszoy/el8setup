@@ -350,7 +350,7 @@ EOF
 
     # is the firewall on?
     if [[ $(firewall-cmd --state) -eq 0 ]]; then
-        # allow zabbix passive agent port
+        # allow squid port
         firewall-cmd --permanent --add-service=squid
         firewall-cmd --reload
     fi
