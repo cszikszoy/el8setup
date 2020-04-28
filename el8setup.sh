@@ -598,6 +598,9 @@ if confirm "Join domain?"; then
     # don't enable gpo based access control (https://bugzilla.redhat.com/show_bug.cgi?id=1364559)
     echo "ad_gpo_access_control = disabled" >> /etc/sssd/sssd.conf
 
+    # don't do dynamic dns updates (https://access.redhat.com/solutions/4437901)
+    echo "dyndns_update = False" >> /etc/sssd/sssd.conf
+
     # add domain_admins to sudoers?
     if confirm "Add domain_admins to sudoers?"; then
         # add domain admins from AD to sudoers file
