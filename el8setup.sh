@@ -595,6 +595,9 @@ if confirm "Join domain?"; then
     sed -i -e '/services = nss, pam/a override_space = _' /etc/sssd/sssd.conf
     sed -i -e 's|.*homedir.*|override_homedir = /home/%u|' /etc/sssd/sssd.conf
 
+    # don't enable gpo based access control (https://bugzilla.redhat.com/show_bug.cgi?id=1364559)
+    echo "ad_gpo_access_control = disabled" >> /etc/sssd/sssd.conf
+
     # add domain_admins to sudoers?
     if confirm "Add domain_admins to sudoers?"; then
         # add domain admins from AD to sudoers file
