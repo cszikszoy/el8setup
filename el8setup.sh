@@ -589,7 +589,7 @@ if confirm "Join domain?"; then
     echo -e "${RESET}"
 
     # join domain
-    realm join -U $USER $DOMAIN || exit 1
+    realm join -U ${USER} ${DOMAIN} || exit 1
 
     # ask which group to permit
     if confirm "Restrict access to group? (No means allow all domain users)"; then
@@ -621,9 +621,9 @@ if confirm "Join domain?"; then
     # add domain_admins to sudoers?
     if confirm "Add domain_admins to sudoers?"; then
         # add domain admins from AD to sudoers file
-        echo "" >> /etc/sudoers.d/$PROGRAM
-        echo "# domain_admins have sudo access" >> /etc/sudoers.d/$PROGRAM
-        echo "%domain_admins    ALL=(ALL)   ALL" >> /etc/sudoers.d/$PROGRAM
+        echo "" >> /etc/sudoers.d/${PROGRAM}
+        echo "# domain_admins have sudo access" >> /etc/sudoers.d/${PROGRAM}
+        echo "%domain_admins    ALL=(ALL)   ALL" >> /etc/sudoers.d/${PROGRAM}
     fi
 
     # maybe add other groups to sudoers
@@ -634,8 +634,8 @@ if confirm "Join domain?"; then
             # if we didn't get a group, break the loop
             [[ -z ${GROUP:+x} ]] && break
             # add this group to sudoers
-            echo "# ${GROUP} have sudo access" >> /etc/sudoers.d/$PROGRAM
-            echo "%${GROUP}    ALL=(ALL)   ALL" >> /etc/sudoers.d/$PROGRAM
+            echo "# ${GROUP} have sudo access" >> /etc/sudoers.d/${PROGRAM}
+            echo "%${GROUP}    ALL=(ALL)   ALL" >> /etc/sudoers.d/${PROGRAM}
         done
     fi
 
