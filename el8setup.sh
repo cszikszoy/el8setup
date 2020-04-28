@@ -595,7 +595,8 @@ if confirm "Join domain?"; then
     sed -i -e '/services = nss, pam/a override_space = _' /etc/sssd/sssd.conf
     sed -i -e 's|.*homedir.*|override_homedir = /home/%u|' /etc/sssd/sssd.conf
 
-    # don't enable gpo based access control (https://bugzilla.redhat.com/show_bug.cgi?id=1364559)
+    # don't enable gpo based access control (https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/windows_integration_guide/sssd-gpo)
+    # if a group policy object in a domain is broken all logins will be prevented, so just disable it (https://bugzilla.redhat.com/show_bug.cgi?id=1364559)
     echo "ad_gpo_access_control = disabled" >> /etc/sssd/sssd.conf
 
     # don't do dynamic dns updates (https://access.redhat.com/solutions/4437901)
