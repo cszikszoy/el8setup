@@ -143,8 +143,8 @@ if confirm "Configure proxy?"; then
     DNFCONF="/etc/dnf.conf"
 
     # remove any old proxy or timeout lines
-    sed -i -e '/^proxy=/d' ${DNFCONF}
-    sed -i -e '/^timeout=/d' ${DNFCONF}
+    sed -i -e '/^proxy=/d' ${DNFCONF} &> /dev/null
+    sed -i -e '/^timeout=/d' ${DNFCONF} &> /dev/null
 
     # Add proxy and timeout to yum
     echo "proxy=http://${PROXY}" >> ${DNFCONF}
