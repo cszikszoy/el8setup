@@ -3,11 +3,13 @@
 ####
 # VARIABLES
 ####
+
+# format: <server>:<port>
 PROXY=""
+
 # format: <server>:<nfs export path>
 NFS_HOME=""
-EPEL_REPO="http://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
-ZABBIX_REPO="http://repo.zabbix.com/zabbix/4.5/rhel/8/x86_64/zabbix-release-4.5-2.el8.noarch.rpm"
+
 # $PROGRAM variable sets the name of various configuration files written by this script
 PROGRAM=""
 
@@ -16,6 +18,13 @@ PROGRAM=""
 ####
 # DO NOT CHANGE BELOW HERE
 ####
+
+# EPEL repo
+EPEL_REPO="http://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
+
+# Zabbix repo
+ZABBIX_REPO="http://repo.zabbix.com/zabbix/4.5/rhel/8/x86_64/zabbix-release-4.5-2.el8.noarch.rpm"
+
 # terminal color codes
 BLACK='\033[0;30m'
 RED='\033[1;31m'
