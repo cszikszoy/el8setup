@@ -255,7 +255,7 @@ if confirm "Install & configure base packages?"; then
 
         # maybe set snapd https proxy
         if [[ ! -z "${https_proxy}" ]]; then
-            snap set system proxy.http="${https_proxy}"
+            snap set system proxy.https="${https_proxy}"
         fi
     fi
 fi
