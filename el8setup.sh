@@ -26,7 +26,7 @@ USE_COLORS=YES
 EPEL_REPO="http://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
 
 # Zabbix repo
-ZABBIX_REPO="http://repo.zabbix.com/zabbix/4.5/rhel/8/x86_64/zabbix-release-4.5-2.el8.noarch.rpm"
+ZABBIX_REPO="https://repo.zabbix.com/zabbix/5.0/rhel/8/x86_64/zabbix-release-5.0-1.el8.noarch.rpm"
 
 # terminal color codes
 BLACK='\033[0;30m'
@@ -422,8 +422,6 @@ Server=${ZABBIX_AGENT_SERVER}
 ServerActive=${ZABBIX_AGENT_SERVER}
 Hostname=$(hostname -f)
 Plugins.SytstemRun.LogRemoteCommands=1
-# point docker plugin to /dev/null... default setting causes agent to crash if docker isn't installed
-Plugins.Docker.Endpoint=unix:///dev/null
 EOF
 
     # save zabbix config file path to variable
