@@ -13,7 +13,7 @@ NFS_HOME=""
 # $PROGRAM variable sets the name of various configuration files written by this script
 PROGRAM=""
 
-# output colors? if set to anything other than 'TRUE' colors will not be used
+# output colors? if set to anything other than 'YES' colors will not be used
 USE_COLORS=YES
 
 
