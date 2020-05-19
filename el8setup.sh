@@ -767,10 +767,5 @@ fi
 ####
 # END
 ####
-if confirm "Script end - logout?"; then
-    # logout
-    logout
-else
-    echo -n -e "${RED}Don't forget to logout or restart before using this system!${RESET}"
-    echo
-fi
+echo -n -e "${RED}Don't forget to logout or restart before using this system!${RESET}"
+echo
