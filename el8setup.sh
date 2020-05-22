@@ -415,7 +415,6 @@ if confirm "Install Zabbix agent?"; then
     # comment out DenyKey in agent base config to enable remote commands
     sed -i -e 's|^DenyKey=|#DenyKey|' /etc/zabbix/zabbix_agent2.conf
 
-
     # configure zabbix-agent
     read -r -d '' ZABBIX_AGENT_CONF <<EOF
 Server=${ZABBIX_AGENT_SERVER}
