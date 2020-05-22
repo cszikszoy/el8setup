@@ -412,6 +412,14 @@ if confirm "Install Zabbix agent?"; then
     read ZABBIX_AGENT_SERVER
     echo -e "${RESET}"
 
+    # prompt for agent name
+    echo -n -e "${CYAN}Enter host name of this agent (must match in Zabbix server) or blank to use system hostname ($(hostname -f)): ${YELLOW}"
+    read ZABBIX_AGENT_HOSTNAME
+    echo -e "${RESET}"
+
+    # was anything entered for the proxy name? if not, use the full system hostname
+    [[ -z ${ZABBIX_AGENT_HOSTNAME:+x} ]] && ZABBIX_AGENT_HOSTNAME=$(hostname -f)
+
     # comment out DenyKey in agent base config to enable remote commands
     sed -i -e 's|^DenyKey=|#DenyKey|' /etc/zabbix/zabbix_agent2.conf
 
@@ -419,7 +427,7 @@ if confirm "Install Zabbix agent?"; then
     read -r -d '' ZABBIX_AGENT_CONF <<EOF
 Server=${ZABBIX_AGENT_SERVER}
 ServerActive=${ZABBIX_AGENT_SERVER}
-Hostname=$(hostname -f)
+Hostname=${ZABBIX_AGENT_HOSTNAME}
 Plugins.SytstemRun.LogRemoteCommands=1
 EOF
 
