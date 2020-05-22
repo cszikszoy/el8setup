@@ -421,7 +421,6 @@ if confirm "Install Zabbix agent?"; then
 Server=${ZABBIX_AGENT_SERVER}
 ServerActive=${ZABBIX_AGENT_SERVER}
 Hostname=$(hostname -f)
-AllowKey=*
 Plugins.SytstemRun.LogRemoteCommands=1
 EOF
 
