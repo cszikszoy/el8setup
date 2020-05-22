@@ -447,6 +447,9 @@ EOF
         sed -i "/^ServerActive=/ s|$|,${ZABBIX_AGENT_PROXY}|" ${ZABBIX_AGENT_CONF_FILE}
     fi
 
+    # set ownership to root:zabbix
+    chown -R root:zabbix /etc/zabbix
+
     # enable & start zabbix-agent
     systemd_enable zabbix-agent2
 
@@ -538,6 +541,9 @@ EOF
 
     # tell main zabbix proxy config to read conf files in subdir
     sed -i -e "/^# Include=$/a\\\nInclude=/etc/zabbix/zabbix_proxy.d/*.conf" /etc/zabbix/zabbix_proxy.conf
+
+    # set ownership to root:zabbix
+    chown -R root:zabbix /etc/zabbix
 
     # enable & start zabbix proxy
     systemd_enable zabbix-proxy
