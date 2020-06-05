@@ -497,8 +497,8 @@ DELETE FROM mysql.db WHERE Db='test' OR Db='test_%';
 FLUSH PRIVILEGES;
 EOF
 
-    # install zabbix proxy w/ mysql
-    dnf install -y zabbix-proxy-mysql zabbix-get nmap traceroute
+    # install zabbix proxy w/ mysql and some extras
+    dnf install -y zabbix-proxy-mysql zabbix-get nmap traceroute net-snmp-utils
 
     # prompt for db zabbix password
     echo -n -e "${CYAN}Enter mysql zabbix password: ${YELLOW}"
