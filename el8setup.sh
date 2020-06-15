@@ -565,6 +565,27 @@ fi
 
 
 ####
+# MS ODBC DRIVER
+####
+if confirm "Install MS ODBC Driver?"; then
+    # source: https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver15
+
+    # add mssql-release repo
+    curl https://packages.microsoft.com/config/rhel/8/prod.repo > /etc/yum.repos.d/mssql-release.repo
+
+    # avoid conflicts
+    dnf remove -y unixODBC-utf16 unixODBC-utf16-devel
+
+    # install odbc driver
+    ACCEPT_EULA=Y dnf install -y msodbcsql17
+
+    # for bcp and sqlcmd
+    ACCEPT_EULA=Y dnf install -y mssql-tools
+fi
+
+
+
+####
 # COLORS TO PS1
 ####
 if confirm "Add colors to PS1?"; then
