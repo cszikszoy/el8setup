@@ -230,7 +230,7 @@ if confirm "Install & configure base packages?"; then
     dnf update -y
 
     # install basic packages
-    dnf install -y dkms nano net-tools htop rsync bind-utils htop byobu
+    dnf install -y dkms nano net-tools htop iftop rsync bind-utils htop byobu
 
     # install global nanorc
     cp ./nanorc /etc/nanorc
