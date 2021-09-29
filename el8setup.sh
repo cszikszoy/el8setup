@@ -675,6 +675,9 @@ if confirm "Join domain?"; then
     # don't do dynamic dns updates (https://access.redhat.com/solutions/4437901)
     echo "dyndns_update = False" >> /etc/sssd/sssd.conf
 
+    # fix problems with group membership lookup (https://serverfault.com/questions/874523/some-ad-users-are-missing-supplemental-groups-on-rhel-linux)
+    echo "ldap_use_tokengroups = false" >> /etc/sssd/sssd.conf
+
     # add domain_admins to sudoers?
     if confirm "Add domain_admins to sudoers?"; then
         # add domain admins from AD to sudoers file
