@@ -215,12 +215,12 @@ fi
 ####
 if confirm "Install & configure base packages?"; then
   # add EPEL repo
-    if grep CentOS /etc/redhat-release; then
-        # epel-release is already in the centos repos
-        dnf install -y epel-release
-    else
+    if grep "Red Hat" /etc/redhat-release; then
         # we need to do some more work on redhat
         dnf install -y ${EPEL_REPO}
+    else
+        # epel-release is already in the centos/rocky repos
+        dnf install -y epel-release
     fi
 
     # install deltarpm
