@@ -592,7 +592,7 @@ if confirm "Add colors to PS1?"; then
     # add colors to PS1
     read -r -d '' PS <<'EOF'
 # color PS1
-PS1='\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;31m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+PS1='\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;31m\]\H\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 EOF
 
     # write colors to users
