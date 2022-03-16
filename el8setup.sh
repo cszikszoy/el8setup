@@ -156,6 +156,15 @@ fi
 # PROXY
 ####
 if confirm "Configure proxy?"; then
+    # test proxy
+    curl -s -I -x http://${PROXY} https://www.google.com/ &> /dev/null
+
+    # exit if that didn't work (problem with the proxy, unless google is down...)
+    if [ $? -ne 0 ]; then
+        echo "Testing proxy '${PROXY}' failed"
+        exit 1
+    fi
+
     DNFCONF="/etc/dnf.conf"
 
     # remove any old proxy or timeout lines
